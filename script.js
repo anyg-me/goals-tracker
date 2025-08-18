@@ -19,11 +19,15 @@ class GoalTracker {
         this.goalForm = document.getElementById('goalForm');
         this.goalTitleInput = document.getElementById('goalTitle');
         this.goalTargetInput = document.getElementById('goalTarget');
+        this.goalUnitInput = document.getElementById('goalUnit');
+        this.goalFrequencyInput = document.getElementById('goalFrequency');
         
         // Modal elements
         this.modalGoalForm = document.getElementById('modalGoalForm');
         this.modalGoalTitleInput = document.getElementById('modalGoalTitle');
         this.modalGoalTargetInput = document.getElementById('modalGoalTarget');
+        this.modalGoalUnitInput = document.getElementById('modalGoalUnit');
+        this.modalGoalFrequencyInput = document.getElementById('modalGoalFrequency');
         this.goalModal = document.getElementById('goalModal');
         this.modalClose = document.getElementById('modalClose');
         this.goalCreationSection = document.getElementById('goalCreation');
@@ -227,23 +231,57 @@ class GoalTracker {
         this.yearProgressText.textContent = `${Math.round(progressPercent)}%`;
     }
     
+    calculateYearlyTargetHours(targetTime, unit, frequency) {
+        // Convert target time to hours
+        let hoursPerSession = unit === 'minutes' ? targetTime / 60 : targetTime;
+        
+        // Calculate sessions per year based on frequency
+        let sessionsPerYear;
+        switch (frequency) {
+            case 'daily':
+                sessionsPerYear = 365;
+                break;
+            case 'weekly':
+                sessionsPerYear = 52;
+                break;
+            case 'monthly':
+                sessionsPerYear = 12;
+                break;
+            default:
+                sessionsPerYear = 52; // Default to weekly
+        }
+        
+        return Math.round(hoursPerSession * sessionsPerYear * 100) / 100; // Round to 2 decimal places
+    }
+    
     handleAddGoal(e) {
         e.preventDefault();
         
         const title = this.goalTitleInput.value.trim();
-        const target = parseInt(this.goalTargetInput.value);
+        const targetTime = parseInt(this.goalTargetInput.value);
+        const unit = this.goalUnitInput.value;
+        const frequency = this.goalFrequencyInput.value;
         
-        if (!title || !target || target <= 0) {
-            alert('Please enter a valid goal title and target hours.');
+        if (!title || !targetTime || targetTime <= 0) {
+            alert('Please enter a valid goal title and target time.');
             return;
         }
+        
+        // Calculate yearly target hours from the new format
+        const yearlyTargetHours = this.calculateYearlyTargetHours(targetTime, unit, frequency);
         
         const goal = {
             id: Date.now().toString(),
             title,
-            targetHours: target,
+            targetHours: yearlyTargetHours,
             spentMinutes: 0,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            // Store the original settings for display/editing purposes
+            originalTarget: {
+                time: targetTime,
+                unit: unit,
+                frequency: frequency
+            }
         };
         
         this.goals.push(goal);
@@ -256,19 +294,30 @@ class GoalTracker {
         e.preventDefault();
         
         const title = this.modalGoalTitleInput.value.trim();
-        const target = parseInt(this.modalGoalTargetInput.value);
+        const targetTime = parseInt(this.modalGoalTargetInput.value);
+        const unit = this.modalGoalUnitInput.value;
+        const frequency = this.modalGoalFrequencyInput.value;
         
-        if (!title || !target || target <= 0) {
-            alert('Please enter a valid goal title and target hours.');
+        if (!title || !targetTime || targetTime <= 0) {
+            alert('Please enter a valid goal title and target time.');
             return;
         }
+        
+        // Calculate yearly target hours from the new format
+        const yearlyTargetHours = this.calculateYearlyTargetHours(targetTime, unit, frequency);
         
         const goal = {
             id: Date.now().toString(),
             title,
-            targetHours: target,
+            targetHours: yearlyTargetHours,
             spentMinutes: 0,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            // Store the original settings for display/editing purposes
+            originalTarget: {
+                time: targetTime,
+                unit: unit,
+                frequency: frequency
+            }
         };
         
         this.goals.push(goal);

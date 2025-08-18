@@ -63,8 +63,23 @@
                             <input type="text" id="goalTitle" placeholder="e.g., Learn Spanish" required>
                         </div>
                         <div class="form-group">
-                            <label for="goalTarget">Target Hours</label>
-                            <input type="number" id="goalTarget" min="1" placeholder="e.g., 100" required>
+                            <label for="goalTarget">Target Time</label>
+                            <input type="number" id="goalTarget" min="1" placeholder="e.g., 30" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="goalUnit">Unit</label>
+                            <select id="goalUnit" required>
+                                <option value="minutes">Minutes</option>
+                                <option value="hours" selected>Hours</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="goalFrequency">Frequency</label>
+                            <select id="goalFrequency" required>
+                                <option value="daily">Daily</option>
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Goal</button>
                     </form>
@@ -96,9 +111,26 @@
                     <label for="modalGoalTitle">Goal Title</label>
                     <input type="text" id="modalGoalTitle" placeholder="e.g., Learn Spanish" required>
                 </div>
-                <div class="form-group">
-                    <label for="modalGoalTarget">Target Hours</label>
-                    <input type="number" id="modalGoalTarget" min="1" placeholder="e.g., 100" required>
+                <div class="target-time-row">
+                    <div class="form-group">
+                        <label for="modalGoalTarget">Target Time</label>
+                        <input type="number" id="modalGoalTarget" min="1" placeholder="e.g., 30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalGoalUnit">Unit</label>
+                        <select id="modalGoalUnit" required>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours" selected>Hours</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalGoalFrequency">Frequency</label>
+                        <select id="modalGoalFrequency" required>
+                            <option value="daily">Daily</option>
+                            <option value="weekly" selected>Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Goal</button>
             </form>
