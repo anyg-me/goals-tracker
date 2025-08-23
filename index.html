@@ -184,9 +184,17 @@
                 <button class="custom-time-btn">Custom</button>
             </div>
             <div class="custom-time-input" style="display: none;">
-                <input type="number" class="custom-minutes" placeholder="Minutes" min="1">
-                <button class="add-custom-time btn btn-sm">Add</button>
-                <button class="cancel-custom-time btn btn-sm btn-secondary">Cancel</button>
+                <div class="custom-time-fields">
+                    <input type="number" class="custom-time-amount" placeholder="Amount" min="1">
+                    <select class="custom-time-unit">
+                        <option value="minutes" selected>Minutes</option>
+                        <option value="hours">Hours</option>
+                    </select>
+                </div>
+                <div class="custom-time-actions">
+                    <button class="add-custom-time btn btn-sm">Add</button>
+                    <button class="cancel-custom-time btn btn-sm btn-secondary">Cancel</button>
+                </div>
             </div>
         </div>
     </template>

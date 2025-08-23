@@ -416,22 +416,36 @@ body {
 
 /* Custom Time Input */
 .custom-time-input {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
+  display: block;
   padding: 1rem;
   background-color: var(--bg-secondary);
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
+  gap: 1rem;
 }
 
-.custom-minutes {
-  flex: 1;
+.custom-time-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.custom-time-amount,
+.custom-time-unit {
   padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.375rem;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.custom-time-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
 }
 
 /* Responsive Design */
@@ -499,7 +513,12 @@ body {
     padding: 0.4rem 0.2rem;
   }
   
-  .custom-time-input {
+  .custom-time-fields {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .custom-time-actions {
     flex-direction: column;
   }
 }

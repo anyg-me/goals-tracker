@@ -254,6 +254,11 @@ class GoalTracker {
         return Math.round(hoursPerSession * sessionsPerYear * 100) / 100; // Round to 2 decimal places
     }
     
+    calculateCustomTimeMinutes(amount, unit) {
+        // Convert amount to minutes
+        return unit === 'hours' ? amount * 60 : amount;
+    }
+    
     handleAddGoal(e) {
         e.preventDefault();
         
@@ -399,33 +404,39 @@ class GoalTracker {
         // Custom time button
         const customTimeBtn = template.querySelector('.custom-time-btn');
         const customTimeInput = template.querySelector('.custom-time-input');
-        const customMinutesInput = template.querySelector('.custom-minutes');
+        const customTimeAmountInput = template.querySelector('.custom-time-amount');
+        const customTimeUnitInput = template.querySelector('.custom-time-unit');
         const addCustomTimeBtn = template.querySelector('.add-custom-time');
         const cancelCustomTimeBtn = template.querySelector('.cancel-custom-time');
         
         customTimeBtn.addEventListener('click', () => {
-            customTimeInput.style.display = 'flex';
-            customMinutesInput.focus();
+            customTimeInput.style.display = 'block';
+            customTimeAmountInput.focus();
         });
         
         addCustomTimeBtn.addEventListener('click', () => {
-            const minutes = parseInt(customMinutesInput.value);
-            if (minutes && minutes > 0) {
+            const amount = parseInt(customTimeAmountInput.value);
+            const unit = customTimeUnitInput.value;
+            
+            if (amount && amount > 0) {
+                const minutes = this.calculateCustomTimeMinutes(amount, unit);
                 this.addTimeToGoal(goalId, minutes);
                 customTimeInput.style.display = 'none';
-                customMinutesInput.value = '';
+                customTimeAmountInput.value = '';
+                customTimeUnitInput.value = 'minutes';
             } else {
-                alert('Please enter a valid number of minutes.');
+                alert('Please enter a valid amount.');
             }
         });
         
         cancelCustomTimeBtn.addEventListener('click', () => {
             customTimeInput.style.display = 'none';
-            customMinutesInput.value = '';
+            customTimeAmountInput.value = '';
+            customTimeUnitInput.value = 'minutes';
         });
         
         // Allow Enter key to add custom time
-        customMinutesInput.addEventListener('keypress', (e) => {
+        customTimeAmountInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 addCustomTimeBtn.click();
             }
